@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import {
-  Toolbar, 
-  Button, 
-  DialogContainer,
-  Divider
+  Toolbar
 } from 'react-md'
 import Konva from'konva'
 import { 
     Stage, 
     Layer
  } from 'react-konva'
-import './App.css';
 import MapNavButton from './MapNavButton'
 import { drawChair } from './drawChair'
 import { drawWindow } from './drawWindow'
@@ -19,26 +15,16 @@ import { drawDoor } from './drawDoor'
 import { drawText } from './drawText'
 import { drawSquare } from './drawSquare'
 import { drawCircle } from './drawCircle'
-
+import './styles/home.css';
+import './styles/App.css'
 
 class App extends Component {
 
   state = {
-    dialogAddVisible: false,
-    tableId: '',
-    tableName: '',
-    tableSeats: '',
-    tableFontSize: 14,
-    tableTextColor: '#000000',
-    tableFontFamily: 'Helvetica',
     innerWidth: window.innerWidth - 160,
     innerHeight: window.innerHeight - 200,
     shape: '',
     gridSize: 10,
-    dialogDeleteVisible: false,
-    dialogEditVisible: false,
-    dialogRemoveAllElementVisible: false,
-    dialogEditShapeVisible: false,
     shapeNode: '',
     shapeStrokeColor: '',
     shapeStrokeWidth: '',
@@ -48,15 +34,10 @@ class App extends Component {
     dialogAlertVisible: false,
     selectedShapes: [],
     copySize: false,
-    dialogCopyVisible: false,
-    dialogImageDialogVisible: false,
     loadImageSrc: '',
-    dialogBackgroundDialogVisible: false,
     loadImageType: '',
     historyLog: [],
     stageSelector: false,
-    fieldOne: "Table Name",
-    fieldTwo: "Table Seats",
     canvasLayer: '',
     canvasStage: ''
   }
@@ -89,20 +70,73 @@ class App extends Component {
 
 }
 
+componentWillUnmount() {
+    document.removeEventListener('mouseup', this.handleTextRotation)
+}
+
+dragElement = (e) => {
+    const shapeNode = e.currentTarget
+    if (this.state.stageSelector === false) this.layer.find('#stageSelect').destroy()
+    const grid = this.state.gridSize
+    const x = Math.floor(shapeNode.getAttr('x'))
+    const y = Math.floor(shapeNode.getAttr('y'))
+    shapeNode.setAttr('x', Math.round(x / grid) * grid)
+    shapeNode.setAttr('y', Math.round(y / grid) * grid)
+    this.layer.find('Transformer').destroy()
+    this.layer.draw()
+}
+
+handleTextRotation = () => {
+    if (this.state.shapeNode === "") return
+
+    this.layer.find('Transformer').destroy() 
+    this.layer.draw()           
+    const rot = this.state.shapeNode.getAttr('rotation')
+    let prevRot = this.state.shapeNode.getAttr('prevRotation')
+
+    if (prevRot === undefined) {
+        prevRot = 0
+    }
+
+    this.state.shapeNode.setAttr('prevRotation',rot)
+
+    this.layer.draw()
+    document.removeEventListener('mouseup', this.handleTextRotation)
+    
+}
+
+handleTransform = () => {
+    document.addEventListener('mouseup', this.handleTextRotation)
+}
+
+transformSize = (e) => {  
+    const shapeNode = e.currentTarget
+  
+    this.setState({
+        shapeFillColor: shapeNode.children[0].attrs['fill'],
+        shapeStrokeColor: shapeNode.children[0].attrs['stroke'],
+        shapeStrokeWidth: shapeNode.children[0].attrs['strokeWidth'],
+        shapeOpacity: shapeNode.children[0].attrs['opacity'],
+        shapeNode: shapeNode
+    })
+    
+    this.layer.find('Transformer').destroy()
+    const tr = new Konva.Transformer()
+    this.layer.add(tr)
+    tr.attachTo(shapeNode)
+    shapeNode.on('transform', this.handleTransform)
+    this.layer.draw()
+}
+
 showDialog = (shape) => {
     
     const shapeParams = {
         innerWidth: this.state.innerWidth, 
         innerHeight: this.state.innerHeight, 
         transformSize: this.transformSize, 
-        dragElement: this.dragElement, 
-        handleContextMenu: this.handleContextMenu, 
+        dragElement: this.dragElement,
         layer: this.layer,
-        stage: this.stage.getStage(),
-        resetTableState: this.resetTableState,
-        dispatch: this.props.dispatch,
-        mapId: this.props.mapId,
-        addHistory: this.addHistory
+        stage: this.stage.getStage()
     }
 
     switch (shape) {
@@ -114,6 +148,12 @@ showDialog = (shape) => {
             return drawWall(shapeParams)
         case 'Window':
             return drawWindow(shapeParams)  
+        case 'Text':
+            return drawText(shapeParams)
+        case 'Square':
+            return drawSquare(shapeParams)
+        case 'Circle':
+            return drawCircle(shapeParams)
         default:
             return
     }
@@ -121,102 +161,27 @@ showDialog = (shape) => {
 
   render() {
 
-    const topButton = {
-      height: "100%",
-      marginTop: "0px",
-      marginBottom: "0px",
-    }
-
-    const topButtonDiv = {
-        textTransform: "capitalize"
-    }
-
-    const options = {
-      innerWidth: this.state.innerWidth, 
-      innerHeight: this.state.innerHeight, 
-      transformSize: this.transformSize, 
-      dragElement: this.dragElement, 
-      handleContextMenu: this.handleContextMenu,
-      layer: this.state.canvasLayer, 
-      resetTableState: this.resetTableState,
-      tableFontSize: this.state.tableFontSize,
-      tableFontFamily: this.state.tableFontFamily,
-      stage: this.state.canvasStage,
-      dispatch: this.props.dispatch,
-      mapId: this.props.mapId,
-      prevRotation: 0,
-      rotation: 0,
-      scaleX: 1,
-      scaleY: 1,
-      addHistory: this.addHistory
-    }
-
     const mapLeftBtnProps = {
       showDialog: this.showDialog
     }
+
     return (
       <div>
-          <Toolbar themed title="Floorplan Canvas" style={{background: "#e1e1e1"}}>
-              <div style={{position:"absolute", right:0, marginLeft:20}}>
-                  <Button 
-                      flat
-                      style={topButton}
-                      onClick={() => {
-                          this.setState({dialogRemoveAllElementVisible: true})
-                      }}
-                      >
-                      <div style={topButtonDiv}>Clear</div>
-                  </Button>
-                  
-                  <Button 
-                      flat
-                      style={topButton}
-                      onClick={() => drawText(options)}
-                      >
-                      <div style={topButtonDiv}>Text</div>
-                  </Button>
-                  <Button 
-                      flat
-                      style={topButton}
-                      onClick={() => drawSquare(options)}
-                      >
-                      <div style={topButtonDiv}>Square</div>
-                  </Button>
-                  <Button 
-                      flat
-                      style={topButton}
-                      onClick={() => drawCircle(options)}
-                      >
-                      <div style={topButtonDiv}>Circle</div>
-                  </Button>
-                  <Button 
-                      flat
-                      style={topButton}
-                      onClick={this.moveElemToBottom}
-                      >
-                      <div style={topButtonDiv}>To Back</div>
-                  </Button>
-                  <Button 
-                      flat
-                      style={topButton}
-                      onClick={this.moveElemToFront}
-                      >
-                      <div style={topButtonDiv}>To Front</div>
-                  </Button>
-              </div>
-          </Toolbar>
-
-          <div id="container"></div>
+            <Toolbar 
+                colored 
+                title="FloorPlan Canvas" 
+            ></Toolbar>
 
           <div style={{display: "flex"}}>
               <div style={{width:160}}>
-                  <h2 style={{padding: "15px 16px 0px"}}>{this.props.mapName}</h2>
-                  <Divider />
-                  <MapNavButton {...mapLeftBtnProps} buttonName="Window" />
-                  <MapNavButton {...mapLeftBtnProps} buttonName="Wall" />
-                  <MapNavButton {...mapLeftBtnProps} buttonName="Door" />
-                  <MapNavButton {...mapLeftBtnProps} buttonName="Chair" />
-              </div>
+                    <MapNavButton {...mapLeftBtnProps} buttonName="Window" />
+                    <MapNavButton {...mapLeftBtnProps} buttonName="Wall" />
+                    <MapNavButton {...mapLeftBtnProps} buttonName="Door" />
+                    <MapNavButton {...mapLeftBtnProps} buttonName="Chair" />
+                    <MapNavButton {...mapLeftBtnProps} buttonName="Text" />
+                    <MapNavButton {...mapLeftBtnProps} buttonName="Square" />  
+                    <MapNavButton {...mapLeftBtnProps} buttonName="Circle" />              
+                </div>
               <Stage 
                   width={this.state.innerWidth} 
                   height={this.state.innerHeight}
