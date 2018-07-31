@@ -36,7 +36,6 @@ export function drawChair(shapeParams, width=20, height=24, fill='#805716', stro
     group.add(chair, back)
     group.on('click tap', shapeParams.transformSize)
     group.on('mouseup', shapeParams.dragElement)
-    group.on('contextmenu', shapeParams.handleContextMenu)
     group.on('mouseleave', () => {
         shapeParams.stage.setAttr('cursor', 'default')
     })

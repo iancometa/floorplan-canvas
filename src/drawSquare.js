@@ -29,7 +29,6 @@ export function drawSquare(options, width=60, height=60, fill='#D0021B', stroke=
     group.add(rect)
     group.on('click tap', options.transformSize)
     group.on('mouseup', options.dragElement)
-    group.on('contextmenu', options.handleContextMenu)
     group.on('mouseleave', () => {
         const s = options.stage.getStage()
         s.setAttr('cursor', 'default')

@@ -28,7 +28,6 @@ export function drawText(options, fill='#000000', stroke='#000000', strokeWidth=
     group.add(text)
     group.on('click tap', options.transformSize)
     group.on('mouseup', options.dragElement)
-    group.on('contextmenu', options.handleContextMenu)
     group.on('mouseleave', () => {
         const s = options.stage.getStage()
         s.setAttr('cursor', 'default')

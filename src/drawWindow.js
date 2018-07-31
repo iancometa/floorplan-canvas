@@ -29,7 +29,6 @@ export function drawWindow(shapeParams, width=60, height=4, fill='#ffffff', stro
     group.add(window)
     group.on('click tap', shapeParams.transformSize)
     group.on('mouseup', shapeParams.dragElement)
-    group.on('contextmenu', shapeParams.handleContextMenu)
     group.on('mouseleave', () => {
         shapeParams.stage.setAttr('cursor', 'default')
     })

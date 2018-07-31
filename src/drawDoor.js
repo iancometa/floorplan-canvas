@@ -37,7 +37,6 @@ export function drawDoor(shapeParams, width=50, height=8, fill='#805716', stroke
     group.add(door, knob)
     group.on('click tap', shapeParams.transformSize)
     group.on('mouseup', shapeParams.dragElement)
-    group.on('contextmenu', shapeParams.handleContextMenu)
     group.on('mouseleave', () => {
         shapeParams.stage.setAttr('cursor', 'default')
     })

@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import {
-  Toolbar
-} from 'react-md'
 import Konva from'konva'
 import { 
     Stage, 
@@ -167,13 +164,11 @@ showDialog = (shape) => {
 
     return (
       <div>
-            <Toolbar 
-                colored 
-                title="FloorPlan Canvas" 
-            ></Toolbar>
+            <h2>FloorPlan Canvas</h2>
 
-          <div style={{display: "flex"}}>
-              <div style={{width:160}}>
+            <div style={{display: "flex"}}>
+                
+                <div style={{width:160}}>
                     <MapNavButton {...mapLeftBtnProps} buttonName="Window" />
                     <MapNavButton {...mapLeftBtnProps} buttonName="Wall" />
                     <MapNavButton {...mapLeftBtnProps} buttonName="Door" />
@@ -182,32 +177,33 @@ showDialog = (shape) => {
                     <MapNavButton {...mapLeftBtnProps} buttonName="Square" />  
                     <MapNavButton {...mapLeftBtnProps} buttonName="Circle" />              
                 </div>
-              <Stage 
-                  width={this.state.innerWidth} 
-                  height={this.state.innerHeight}
-                  name="stage"
-                  style={{
-                      backgroundColor: "#696767"
-                  }}
-                  ref={node => {
-                      this.stage = node
-                  }}
-                  onClick={this.clickStage}
-              >
-                  <Layer
-                      ref={node => {
-                          this.baseLayer = node
-                      }}
-                  >
-                  </Layer>
-                  <Layer
-                      ref={node => {
-                          this.layer = node
-                      }}
-                  >
-                  </Layer>
-              </Stage>
-          </div>
+                
+                <Stage 
+                    width={this.state.innerWidth} 
+                    height={this.state.innerHeight}
+                    name="stage"
+                    style={{
+                        backgroundColor: "#696767"
+                    }}
+                    ref={node => {
+                        this.stage = node
+                    }}
+                    onClick={this.clickStage}
+                >
+                    <Layer
+                        ref={node => {
+                            this.baseLayer = node
+                        }}
+                    >
+                    </Layer>
+                    <Layer
+                        ref={node => {
+                            this.layer = node
+                        }}
+                    >
+                    </Layer>
+                </Stage>
+            </div>
         
         </div>
     )

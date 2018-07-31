@@ -27,7 +27,6 @@ export function drawCircle(options, radius={x:30,y:30}, fill='#F8E71C', stroke='
     group.add(circ)
     group.on('click tap', options.transformSize)
     group.on('mouseup', options.dragElement)
-    group.on('contextmenu', options.handleContextMenu)
     group.on('mouseleave', () => {
         const s = options.stage.getStage()
         s.setAttr('cursor', 'default')

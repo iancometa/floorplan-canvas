@@ -29,7 +29,6 @@ export function drawWall(shapeParams, width=10, height=80, fill='#c0c0c0', strok
     group.add(wall)
     group.on('click tap', shapeParams.transformSize)
     group.on('mouseup', shapeParams.dragElement)
-    group.on('contextmenu', shapeParams.handleContextMenu)
     group.on('mouseleave', () => {
         shapeParams.stage.setAttr('cursor', 'default')
     })
