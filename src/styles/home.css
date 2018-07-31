@@ -1,0 +1,111 @@
+.gapped:after {
+  width: 5px; }
+
+.md-dialog--centered .md-list-tile.md-text {
+  height: 25px; }
+
+.ag-theme-material .ag-header-row .ag-header-cell, .ag-theme-material .ag-header-row .ag-header-group-cell {
+  padding-left: 12px;
+  padding-right: 12px; }
+
+.ag-theme-material .ag-header-cell .ag-floating-filter-button {
+  margin-top: 5px; }
+
+.ag-theme-material .ag-row .ag-cell {
+  line-height: 30px;
+  border-left: 1px solid #e0e0e0;
+  padding-left: 12px;
+  padding-right: 12px; }
+
+.ag-theme-material .ag-row .ag-cell.ag-cell-focus {
+  border-left: 1px solid #0d47a1; }
+
+.ag-theme-material .ag-row .ag-cell.ag-cell-inline-editing {
+  height: 30px;
+  padding-top: 0;
+  padding-bottom: 0; }
+
+.ag-theme-material .ag-header-row .ag-header-cell, .ag-theme-material .ag-header-group-cell {
+  line-height: 30px;
+  font-size: 13px; }
+
+*, button, h2, .ag-theme-material, .ag-theme-material .ag-header {
+  font-family: Helvetica, arial, sans-serif; }
+
+.ag-row-odd {
+  background: #f7f7f7; }
+
+.ag-theme-material .ag-row.ag-row-selected {
+  background: #2196f3;
+  color: #fff; }
+
+.ag-theme-material.column-selector .ag-cell {
+  background: #fff;
+  color: #000;
+  border: none; }
+
+.ag-theme-material.column-selector .ag-row.ag-row-selected .ag-cell-focus {
+  border: none; }
+
+.ag-theme-material.column-selector .ag-ltr .ag-cell-last-left-pinned {
+  border: none; }
+
+.ag-theme-material.column-selector .ag-row {
+  border: none; }
+
+.ag-theme-material.column-selector .ag-row .ag-cell.ag-cell-focus {
+  border: none; }
+
+.ag-theme-material.column-selector .ag-row.ag-row-selected {
+  background: #fff;
+  color: #000;
+  border: none; }
+
+.ag-theme-material .ag-row.ag-row-selected .ag-cell-focus {
+  border-width: 2px; }
+
+.incell-editor {
+  border: none;
+  background: transparent; }
+
+.date-editor-input {
+  width: 111px;
+  height: 28px; }
+
+.inline-toolbar, .inline-toolbar .md-title--toolbar, .inline-toolbar .md-btn--toolbar {
+  height: 45px;
+  line-height: 45px; }
+
+.inline-toolbar .md-btn--toolbar {
+  margin: -7px 0 0 0; }
+
+.inline-toolbar .md-btn--toolbar .md-btn {
+  margin: auto; }
+
+.my-slider .md-slider-track-fill {
+  background: none; }
+
+.App {
+  text-align: center; }
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px; }
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white; }
+
+.App-title {
+  font-size: 1.5em; }
+
+.App-intro {
+  font-size: large; }
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg); }
+  to {
+    transform: rotate(360deg); } }
