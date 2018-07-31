@@ -27,13 +27,6 @@ class App extends Component {
     shapeStrokeWidth: '',
     shapeFillColor: '',
     shapeOpacity: '',
-    alertMessage: '',
-    dialogAlertVisible: false,
-    selectedShapes: [],
-    copySize: false,
-    loadImageSrc: '',
-    loadImageType: '',
-    historyLog: [],
     stageSelector: false,
     canvasLayer: '',
     canvasStage: ''
