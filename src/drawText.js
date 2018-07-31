@@ -36,12 +36,5 @@ export function drawText(options, fill='#000000', stroke='#000000', strokeWidth=
 
     options.layer.add(group)
     options.layer.draw()
-    options.resetTableState()
-
-    const layer = options.layer.getLayer()
-    const obj = layer.toObject()
-        if (options.addHistory !== "") {
-            options.addHistory(obj)
-        }
 
 }

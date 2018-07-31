@@ -17,12 +17,9 @@ import { drawChair } from './drawChair'
 import { drawWindow } from './drawWindow'
 import { drawWall } from './drawWall'
 import { drawDoor } from './drawDoor'
-import { drawSquareTable } from './drawSquareTable'
-import { drawRoundTable } from  './drawRoundTable'
 import { drawText } from './drawText'
 import { drawSquare } from './drawSquare'
 import { drawCircle } from './drawCircle'
-import { drawImage } from './drawImage'
 
 
 class App extends Component {
@@ -65,6 +62,64 @@ class App extends Component {
     canvasStage: ''
   }
 
+  componentDidMount() {
+    this.setState({
+        canvasLayer: this.layer,
+        canvasStage: this.stage
+    })
+    var gridSize = this.state.gridSize,
+        canvasHeight = this.state.innerHeight,
+        canvasWidth = this.state.innerWidth;
+
+    /**
+     * this will create grid 
+     * on the stage canvas 
+     */
+    for (var i = 0; i <= (canvasWidth / gridSize); i++) {
+        this.baseLayer.add(new Konva.Line({
+            points: [i * gridSize, 0, i * gridSize, canvasHeight],
+            stroke: '#fff',
+            strokeWidth: 0.5
+        }))
+        this.baseLayer.add(new Konva.Line({
+            points: [0, i * gridSize, canvasWidth, i * gridSize],
+            stroke: '#fff',
+            strokeWidth: 0.5
+        }))
+    }       
+
+}
+
+showDialog = (shape) => {
+    
+    const shapeParams = {
+        innerWidth: this.state.innerWidth, 
+        innerHeight: this.state.innerHeight, 
+        transformSize: this.transformSize, 
+        dragElement: this.dragElement, 
+        handleContextMenu: this.handleContextMenu, 
+        layer: this.layer,
+        stage: this.stage.getStage(),
+        resetTableState: this.resetTableState,
+        dispatch: this.props.dispatch,
+        mapId: this.props.mapId,
+        addHistory: this.addHistory
+    }
+
+    switch (shape) {
+        case 'Chair':
+            return drawChair(shapeParams) 
+        case 'Door':
+            return drawDoor(shapeParams) 
+        case 'Wall':
+            return drawWall(shapeParams)
+        case 'Window':
+            return drawWindow(shapeParams)  
+        default:
+            return
+    }
+}
+
   render() {
 
     const topButton = {
@@ -102,18 +157,8 @@ class App extends Component {
     }
     return (
       <div>
-          <Toolbar themed style={{background: "#e1e1e1"}}>
+          <Toolbar themed title="Floorplan Canvas" style={{background: "#e1e1e1"}}>
               <div style={{position:"absolute", right:0, marginLeft:20}}>
-                  <Button 
-                      flat
-                      style={topButton}
-                      onClick={() => {
-                         this.setState({copySize: true})
-                      }}
-                      >
-                      <FontIcon>reorder</FontIcon>
-                      <div style={topButtonDiv}>Align Size</div>
-                  </Button>
                   <Button 
                       flat
                       style={topButton}
@@ -121,51 +166,14 @@ class App extends Component {
                           this.setState({dialogRemoveAllElementVisible: true})
                       }}
                       >
-                      <FontIcon>clear</FontIcon>
                       <div style={topButtonDiv}>Clear</div>
                   </Button>
-                  <Button 
-                      flat
-                      style={topButton}
-                      onClick={this.undoMethod}
-                      >
-                      <FontIcon>undo</FontIcon>
-                      <div style={topButtonDiv}>Undo</div>
-                  </Button>
-                  <Button 
-                      flat
-                      style={topButton}
-                      onClick={this.removeBackground}
-                  >
-                      <FontIcon>clear</FontIcon>
-                      <div style={topButtonDiv}>Delete Background</div>
-                  </Button>
-                  <Button 
-                      flat
-                      style={topButton}
-                      onClick={() => {
-                          this.setState({dialogBackgroundDialogVisible: true})
-                      }}
-                      >
-                      <FontIcon>photo</FontIcon>
-                      <div style={topButtonDiv}>Background</div>
-                  </Button>
-                  <Button 
-                      flat
-                      style={topButton}
-                      onClick={() => {
-                          this.setState({dialogImageDialogVisible: true})
-                      }}
-                      >
-                      <FontIcon>photo</FontIcon>
-                      <div style={topButtonDiv}>Image</div>
-                  </Button>
+                  
                   <Button 
                       flat
                       style={topButton}
                       onClick={() => drawText(options)}
                       >
-                      <FontIcon>text_format</FontIcon>
                       <div style={topButtonDiv}>Text</div>
                   </Button>
                   <Button 
@@ -173,7 +181,6 @@ class App extends Component {
                       style={topButton}
                       onClick={() => drawSquare(options)}
                       >
-                      <FontIcon>crop_square</FontIcon>
                       <div style={topButtonDiv}>Square</div>
                   </Button>
                   <Button 
@@ -181,7 +188,6 @@ class App extends Component {
                       style={topButton}
                       onClick={() => drawCircle(options)}
                       >
-                      <FontIcon>fiber_manual_record</FontIcon>
                       <div style={topButtonDiv}>Circle</div>
                   </Button>
                   <Button 
@@ -189,7 +195,6 @@ class App extends Component {
                       style={topButton}
                       onClick={this.moveElemToBottom}
                       >
-                      <FontIcon>file_download</FontIcon>
                       <div style={topButtonDiv}>To Back</div>
                   </Button>
                   <Button 
@@ -197,16 +202,7 @@ class App extends Component {
                       style={topButton}
                       onClick={this.moveElemToFront}
                       >
-                      <FontIcon>file_upload</FontIcon>
                       <div style={topButtonDiv}>To Front</div>
-                  </Button>
-                  <Button 
-                      flat
-                      style={topButton}
-                      onClick={this.props.backPage}
-                  >
-                      <FontIcon>keyboard_arrow_left</FontIcon>
-                      <div style={topButtonDiv}>Back</div>
                   </Button>
               </div>
           </Toolbar>

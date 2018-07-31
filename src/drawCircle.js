@@ -35,13 +35,7 @@ export function drawCircle(options, radius={x:30,y:30}, fill='#F8E71C', stroke='
 
     options.layer.add(group)
     options.layer.draw()
-    options.resetTableState()
 
-    const layer = options.layer.getLayer()
-    const obj = layer.toObject()
-    if (options.addHistory !== "") {
-        options.addHistory(obj)
-    }
     
 
 }

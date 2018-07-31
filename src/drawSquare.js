@@ -37,12 +37,5 @@ export function drawSquare(options, width=60, height=60, fill='#D0021B', stroke=
 
     options.layer.add(group)
     options.layer.draw()
-    options.resetTableState()
-
-    const layer = options.layer.getLayer()
-    const obj = layer.toObject()
-        if (options.addHistory !== "") {
-            options.addHistory(obj)
-        }
 
 }

@@ -36,12 +36,5 @@ export function drawWall(shapeParams, width=10, height=80, fill='#c0c0c0', strok
 
     shapeParams.layer.add(group)
     shapeParams.layer.draw()
-    shapeParams.resetTableState()
-
-    const layer = shapeParams.layer.getLayer()
-    const obj = layer.toObject()
-    if (shapeParams.addHistory !== "") {
-        shapeParams.addHistory(obj)
-    }
     
 }

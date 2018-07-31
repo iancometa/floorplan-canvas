@@ -44,12 +44,5 @@ export function drawDoor(shapeParams, width=50, height=8, fill='#805716', stroke
 
     shapeParams.layer.add(group)
     shapeParams.layer.draw()
-    shapeParams.resetTableState()
-
-    const layer = shapeParams.layer.getLayer()
-    const obj = layer.toObject()
-    if (shapeParams.addHistory !== "") {
-        shapeParams.addHistory(obj)
-    }
 
 }
