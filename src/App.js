@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   Toolbar, 
   Button, 
-  FontIcon,
   DialogContainer,
   Divider
 } from 'react-md'
