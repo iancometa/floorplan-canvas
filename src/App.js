@@ -4,14 +4,14 @@ import {
     Stage, 
     Layer
  } from 'react-konva'
-import MapNavButton from './MapNavButton'
-import { drawChair } from './drawChair'
-import { drawWindow } from './drawWindow'
-import { drawWall } from './drawWall'
-import { drawDoor } from './drawDoor'
-import { drawText } from './drawText'
-import { drawSquare } from './drawSquare'
-import { drawCircle } from './drawCircle'
+import MapNavButton from './components/MapNavButton'
+import { drawChair } from './components/drawChair'
+import { drawWindow } from './components/drawWindow'
+import { drawWall } from './components/drawWall'
+import { drawDoor } from './components/drawDoor'
+import { drawText } from './components/drawText'
+import { drawSquare } from './components/drawSquare'
+import { drawCircle } from './components/drawCircle'
 import './styles/home.css';
 import './styles/App.css'
 
